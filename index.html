@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora ROI Inmobiliario - Calima Homes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --azul-calima: #2C3E50;
+      --aqua-calima: #97D3CD;
+      --amarillo-calima: #FFD54F;
+      --fondo: #e3e3e4;
+      --texto: #2C3E50;
+      --rojo-suave: #FF9CA4;
+      --verde-menta: #C5E4CA;
+      --verde-intenso: #4CAF50;
+      --rojo-intenso: #E57373;
+      --amarillo-intenso: #FFD54F;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--fondo);
+      margin: 0;
+      padding: 0;
+      color: var(--texto);
+    }
+    .wrapper {
+      background: var(--fondo);
+      padding: 20px 0;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 24px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+    h1 {
+      font-size: 22px;
+      text-align: center;
+      color: var(--azul-calima);
+      margin-bottom: 10px;
+    }
+    p.sub {
+      font-size: 13px;
+      text-align: center;
+      color: #7A8A99;
+      margin-bottom: 25px;
+    }
+    .formulario-recuadro, .panel-resultados {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+      margin-bottom: 24px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: white;
+    }
+    button {
+      background: var(--aqua-calima);
+      color: #000;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .titulo-seccion {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--azul-calima);
+      text-align: center;
+    }
+    .roi-destacado {
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+      margin: 25px auto 0;
+      color: var(--azul-calima);
+      padding: 12px;
+      border-radius: 12px;
+      display: block;
+      min-width: 130px;
+      width: fit-content;
+    }
+    .roi-evaluacion {
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      margin-top: 8px;
+    }
+    .roi-verde {
+      background-color: var(--verde-intenso);
+      color: white;
+    }
+    .roi-amarillo {
+      background-color: var(--amarillo-intenso);
+      color: black;
+    }
+    .roi-rojo {
+      background-color: var(--rojo-intenso);
+      color: white;
+    }
+    .bar-container {
+      margin-bottom: 10px;
+    }
+    .bar {
+      background: #ddd;
+      width: 100%;
+      height: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <h1>Calculadora ROI Inmobiliario</h1>
+      <p class="sub">Simula fácilmente la rentabilidad de tu inversión</p>
+      <div class="formulario-recuadro" id="formulario">
+        <div class="form-group"><label><i class="fas fa-euro-sign" style="color: var(--aqua-calima);"></i> Precio de Compra</label><input type="number" id="precio" value="250000" onfocus="this.value=''" /></div>
+        <div class="form-group"><label><i class="fas fa-tools" style="color: var(--aqua-calima);"></i> Costes Adicionales</label><input type="number" id="extras" value="20000" onfocus="this.value=''" /></div>
+        <div class="form-group"><label><i class="fas fa-receipt" style="color: var(--aqua-calima);"></i> IBI Anual</label><input type="number" id="ibi" value="800" onfocus="this.value=''" /></div>
+        <div class="form-group"><label><i class="fas fa-building" style="color: var(--aqua-calima);"></i> Comunidad Mensual</label><input type="number" id="comunidad" value="100" onfocus="this.value=''" /></div>
+        <div class="form-group"><label><i class="fas fa-shield-alt" style="color: var(--aqua-calima);"></i> Seguro Anual</label><input type="number" id="seguro" value="300" onfocus="this.value=''" /></div>
+        <div class="form-group"><label><i class="fas fa-wrench" style="color: var(--aqua-calima);"></i> Mantenimiento Anual</label><input type="number" id="mantenimiento" value="1200" onfocus="this.value=''" /></div>
+        <div class="form-group"><label><i class="fas fa-money-bill-wave" style="color: var(--aqua-calima);"></i> Ingreso Mensual por Alquiler</label><input type="number" id="alquiler" value="1500" onfocus="this.value=''" /></div>
+        <div class="form-group"><label><i class="fas fa-calendar-alt" style="color: var(--aqua-calima);"></i> Meses Alquilado por Año</label><input type="number" id="meses" value="12" onfocus="this.value=''" /></div>
+        <div class="form-group"><label><i class="fas fa-percentage" style="color: var(--aqua-calima);"></i> Tipo de IRPF</label>
+          <select id="tipoIrpf">
+            <option value="0.19">19%</option>
+            <option value="0.21">21%</option>
+            <option value="0.23">23%</option>
+            <option value="0.26">26%</option>
+            <option value="0.076">7.6% con reducción</option>
+          </select>
+        </div>
+        <button onclick="calcularROI()">Calcular ROI</button>
+      </div>
+
+      <div class="panel-resultados" id="resultado">
+        <div class="titulo-seccion">Análisis de Inversión</div>
+        <p><strong>Inversión Total:</strong> <span id="invTotal">-</span></p>
+        <div class="bar-container">
+          <div class="bar">
+            <div class="bar-fill" id="barInversion" style="width: 100%; background: var(--amarillo-calima);"></div>
+          </div>
+        </div>
+        <p><strong>Gastos Anuales:</strong> <span id="gastAnual">-</span></p>
+        <div class="bar-container">
+          <div class="bar">
+            <div class="bar-fill" id="barGastos" style="width: 0%; background: var(--rojo-suave);"></div>
+          </div>
+        </div>
+        <p><strong>Ingresos Anuales:</strong> <span id="ingAnual">-</span></p>
+        <div class="bar-container">
+          <div class="bar">
+            <div class="bar-fill" id="barIngresos" style="width: 0%; background: var(--aqua-calima);"></div>
+          </div>
+        </div>
+        <p><strong>Ingresos Netos:</strong> <span id="netoAnual">-</span></p>
+        <div class="bar-container">
+          <div class="bar">
+            <div class="bar-fill" id="barBeneficio" style="width: 0%; background: var(--verde-menta);"></div>
+          </div>
+        </div>
+        <p><strong>IRPF estimado:</strong> <span id="impuestoEstimado">-</span></p>
+        <div class="bar-container">
+          <div class="bar">
+            <div class="bar-fill" id="barIRPF" style="width: 0%; background: orange;"></div>
+          </div>
+        </div>
+        <div id="roiResultado" class="roi-destacado">-</div>
+        <div id="evaluacionROI" class="roi-evaluacion"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function calcularROI() {
+      const precio = parseFloat(document.getElementById("precio").value);
+      const extras = parseFloat(document.getElementById("extras").value);
+      const ibi = parseFloat(document.getElementById("ibi").value);
+      const comunidad = parseFloat(document.getElementById("comunidad").value);
+      const seguro = parseFloat(document.getElementById("seguro").value);
+      const mantenimiento = parseFloat(document.getElementById("mantenimiento").value);
+      const alquiler = parseFloat(document.getElementById("alquiler").value);
+      const meses = parseFloat(document.getElementById("meses").value);
+      const tipoIrpf = parseFloat(document.getElementById("tipoIrpf").value);
+
+      const inversion = precio + extras;
+      const gastosAnuales = ibi + comunidad * 12 + seguro + mantenimiento;
+      const ingresosAnuales = alquiler * meses;
+      const beneficioNeto = ingresosAnuales - gastosAnuales;
+      const irpf = beneficioNeto * tipoIrpf;
+      const roi = ((beneficioNeto / inversion) * 100).toFixed(2);
+
+      document.getElementById("barGastos").style.width = ((gastosAnuales / inversion) * 100).toFixed(1) + "%";
+      document.getElementById("barIngresos").style.width = ((ingresosAnuales / inversion) * 100).toFixed(1) + "%";
+      document.getElementById("barBeneficio").style.width = ((beneficioNeto / inversion) * 100).toFixed(1) + "%";
+
+      document.getElementById("invTotal").textContent = inversion.toLocaleString() + "€";
+      document.getElementById("gastAnual").textContent = gastosAnuales.toLocaleString() + "€";
+      document.getElementById("ingAnual").textContent = ingresosAnuales.toLocaleString() + "€";
+      document.getElementById("netoAnual").textContent = beneficioNeto.toLocaleString() + "€";
+      document.getElementById("impuestoEstimado").textContent = irpf.toFixed(2) + "€";
+      document.getElementById("roiResultado").textContent = roi + "%";
+      document.getElementById("barIRPF").style.width = ((irpf / inversion) * 100).toFixed(1) + "%";
+
+      const roiBox = document.getElementById("roiResultado");
+      roiBox.classList.remove("roi-verde", "roi-amarillo", "roi-rojo");
+      if (roi >= 6) {
+        roiBox.classList.add("roi-verde");
+        document.getElementById("evaluacionROI").textContent = "✅ Parece una buena inversión";
+      } else if (roi >= 4) {
+        roiBox.classList.add("roi-amarillo");
+        document.getElementById("evaluacionROI").textContent = "⚠️ Rentabilidad aceptable";
+      } else {
+        roiBox.classList.add("roi-rojo");
+        document.getElementById("evaluacionROI").textContent = "❌ Rentabilidad baja";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,248 +1,930 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calculadora ROI Inmobiliario - Calima Homes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
     :root {
-      --azul-calima: #2C3E50;
-      --aqua-calima: #97D3CD;
-      --amarillo-calima: #FFD54F;
-      --fondo: #e3e3e4;
-      --texto: #2C3E50;
-      --rojo-suave: #FF9CA4;
-      --verde-menta: #C5E4CA;
-      --verde-intenso: #4CAF50;
-      --rojo-intenso: #E57373;
-      --amarillo-intenso: #FFD54F;
+      --fondo: #f2f5f9;
+      --primary: #0a6bf1;
+      --primary-dark: #084bb2;
+      --accent: #0bcfba;
+      --text: #1f2a37;
+      --muted: #6b7785;
+      --success: #2eb872;
+      --warning: #fbbc04;
+      --danger: #ef4444;
+      --card-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --transition: all 0.28s ease;
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Montserrat', sans-serif;
-      background: var(--fondo);
       margin: 0;
-      padding: 0;
-      color: var(--texto);
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(180deg, #06122f 0%, #11224d 45%, #0f172a 100%);
+      min-height: 100vh;
+      color: var(--text);
     }
-    .wrapper {
-      background: var(--fondo);
-      padding: 20px 0;
-    }
-    .container {
-      max-width: 500px;
+
+    .page {
+      max-width: 1150px;
       margin: 0 auto;
-      padding: 24px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      padding: 48px 24px 72px;
     }
-    h1 {
-      font-size: 22px;
+
+    header.hero {
+      color: #f8fafc;
       text-align: center;
-      color: var(--azul-calima);
-      margin-bottom: 10px;
+      margin-bottom: 40px;
     }
-    p.sub {
-      font-size: 13px;
-      text-align: center;
-      color: #7A8A99;
-      margin-bottom: 25px;
+
+    .hero h1 {
+      font-size: clamp(2.1rem, 4vw, 2.8rem);
+      margin: 0 0 12px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
-    .formulario-recuadro, .panel-resultados {
-      background: white;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.05);
-      margin-bottom: 24px;
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 620px;
+      font-size: 1rem;
+      color: rgba(241, 245, 249, 0.85);
+      line-height: 1.6;
     }
-    .form-group {
-      margin-bottom: 15px;
+
+    main.grid {
+      display: grid;
+      gap: 28px;
     }
-    label {
-      font-size: 14px;
-      font-weight: 600;
+
+    @media (min-width: 960px) {
+      main.grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+      }
     }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      font-size: 14px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      background-color: white;
-    }
-    button {
-      background: var(--aqua-calima);
-      color: #000;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      padding: 12px;
-      cursor: pointer;
-      width: 100%;
-    }
-    .titulo-seccion {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 15px;
-      color: var(--azul-calima);
-      text-align: center;
-    }
-    .roi-destacado {
-      text-align: center;
-      font-size: 26px;
-      font-weight: bold;
-      margin: 25px auto 0;
-      color: var(--azul-calima);
-      padding: 12px;
-      border-radius: 12px;
-      display: block;
-      min-width: 130px;
-      width: fit-content;
-    }
-    .roi-evaluacion {
-      text-align: center;
-      font-size: 14px;
-      color: #555;
-      margin-top: 8px;
-    }
-    .roi-verde {
-      background-color: var(--verde-intenso);
-      color: white;
-    }
-    .roi-amarillo {
-      background-color: var(--amarillo-intenso);
-      color: black;
-    }
-    .roi-rojo {
-      background-color: var(--rojo-intenso);
-      color: white;
-    }
-    .bar-container {
-      margin-bottom: 10px;
-    }
-    .bar {
-      background: #ddd;
-      width: 100%;
-      height: 10px;
-      border-radius: 5px;
+
+    .card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--card-shadow);
+      padding: 28px;
+      position: relative;
       overflow: hidden;
     }
-    .bar-fill {
+
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      pointer-events: none;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .form-card .intro {
+      margin-top: -6px;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .field small {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    input[type='number'],
+    select,
+    input[type='range'] {
+      width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      padding: 12px 14px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text);
+      background: rgba(248, 250, 252, 0.85);
+      transition: var(--transition);
+      appearance: none;
+    }
+
+    input[type='number']:focus,
+    select:focus,
+    input[type='range']:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(10, 107, 241, 0.15);
+      background: #fff;
+    }
+
+    input[type='range'] {
+      padding: 0;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+    }
+
+    .range-value {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 20px;
+      font-size: 0.94rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #388bff 100%);
+      color: #fff;
+      flex: 1 1 180px;
+      box-shadow: 0 12px 25px rgba(10, 107, 241, 0.28);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(10, 107, 241, 0.32);
+    }
+
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.06);
+      color: var(--text);
+      flex: 1 1 120px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(15, 23, 42, 0.1);
+    }
+
+    .results-card {
+      display: grid;
+      gap: 24px;
+    }
+
+    .roi-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 140px;
+      font-size: 2.1rem;
+      font-weight: 700;
+      border-radius: 22px;
+      padding: 16px 22px;
+      background: rgba(10, 107, 241, 0.12);
+      color: var(--primary);
+      transition: var(--transition);
+    }
+
+    .roi-status {
+      margin: 0 0 18px;
+      font-weight: 500;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .roi-color-hint {
+      margin: -6px 0 18px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .roi-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      margin-top: -6px;
+      margin-bottom: 12px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .roi-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .roi-legend .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.04);
+    }
+
+    .legend-excelente {
+      background: var(--success);
+    }
+
+    .legend-saludable {
+      background: var(--primary-dark);
+    }
+
+    .legend-justo {
+      background: var(--warning);
+    }
+
+    .legend-equilibrio {
+      background: var(--muted);
+    }
+
+    .legend-negativo {
+      background: var(--danger);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .summary-item {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.04) 0%, rgba(10, 107, 241, 0.08) 100%);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .summary-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .metric-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .metric {
+      display: grid;
+      gap: 8px;
+    }
+
+    .metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .progress-bar {
+      width: 100%;
       height: 10px;
-      border-radius: 5px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.25);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+      transform-origin: left center;
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .detail-box {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      padding: 16px;
+      background: rgba(248, 250, 252, 0.75);
+      display: grid;
+      gap: 6px;
+    }
+
+    .detail-box span {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .detail-box strong {
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    .insights {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .insights li {
+      background: rgba(15, 23, 42, 0.05);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      font-size: 0.88rem;
+      color: var(--text);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .insights li i {
+      color: var(--primary);
+      margin-top: 2px;
+    }
+
+    .timestamp {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    footer.note {
+      margin-top: 42px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(241, 245, 249, 0.75);
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="container">
+  <div class="page">
+    <header class="hero">
       <h1>Calculadora ROI Inmobiliario</h1>
-      <p class="sub">Simula fácilmente la rentabilidad de tu inversión</p>
-      <div class="formulario-recuadro" id="formulario">
-        <div class="form-group"><label><i class="fas fa-euro-sign" style="color: var(--aqua-calima);"></i> Precio de Compra</label><input type="number" id="precio" value="250000" onfocus="this.value=''" /></div>
-        <div class="form-group"><label><i class="fas fa-tools" style="color: var(--aqua-calima);"></i> Costes Adicionales</label><input type="number" id="extras" value="20000" onfocus="this.value=''" /></div>
-        <div class="form-group"><label><i class="fas fa-receipt" style="color: var(--aqua-calima);"></i> IBI Anual</label><input type="number" id="ibi" value="800" onfocus="this.value=''" /></div>
-        <div class="form-group"><label><i class="fas fa-building" style="color: var(--aqua-calima);"></i> Comunidad Mensual</label><input type="number" id="comunidad" value="100" onfocus="this.value=''" /></div>
-        <div class="form-group"><label><i class="fas fa-shield-alt" style="color: var(--aqua-calima);"></i> Seguro Anual</label><input type="number" id="seguro" value="300" onfocus="this.value=''" /></div>
-        <div class="form-group"><label><i class="fas fa-wrench" style="color: var(--aqua-calima);"></i> Mantenimiento Anual</label><input type="number" id="mantenimiento" value="1200" onfocus="this.value=''" /></div>
-        <div class="form-group"><label><i class="fas fa-money-bill-wave" style="color: var(--aqua-calima);"></i> Ingreso Mensual por Alquiler</label><input type="number" id="alquiler" value="1500" onfocus="this.value=''" /></div>
-        <div class="form-group"><label><i class="fas fa-calendar-alt" style="color: var(--aqua-calima);"></i> Meses Alquilado por Año</label><input type="number" id="meses" value="12" onfocus="this.value=''" /></div>
-        <div class="form-group"><label><i class="fas fa-percentage" style="color: var(--aqua-calima);"></i> Tipo de IRPF</label>
-          <select id="tipoIrpf">
-            <option value="0.19">19%</option>
-            <option value="0.21">21%</option>
-            <option value="0.23">23%</option>
-            <option value="0.26">26%</option>
-            <option value="0.076">7.6% con reducción</option>
-          </select>
-        </div>
-        <button onclick="calcularROI()">Calcular ROI</button>
-      </div>
+      <p>Analiza en segundos la rentabilidad de tu propiedad y visualiza cómo influyen los gastos, impuestos y vacancia en tu ROI.</p>
+    </header>
 
-      <div class="panel-resultados" id="resultado">
-        <div class="titulo-seccion">Análisis de Inversión</div>
-        <p><strong>Inversión Total:</strong> <span id="invTotal">-</span></p>
-        <div class="bar-container">
-          <div class="bar">
-            <div class="bar-fill" id="barInversion" style="width: 100%; background: var(--amarillo-calima);"></div>
+    <main class="grid">
+      <section class="card form-card">
+        <h2>Datos de la inversión</h2>
+        <p class="intro">Introduce los valores más relevantes de la operación. Guardaremos tus últimos datos para que puedas retomarlos cuando quieras.</p>
+        <form id="roiForm">
+          <div class="field">
+            <label for="moneda"><i class="fas fa-coins" style="color: var(--accent);"></i> Moneda de referencia</label>
+            <select id="moneda">
+              <option value="EUR" data-simbolo="€">Euro (€)</option>
+              <option value="USD" data-simbolo="$">Dólar estadounidense ($)</option>
+              <option value="MXN" data-simbolo="$">Peso mexicano (MXN)</option>
+              <option value="COP" data-simbolo="$">Peso colombiano (COP)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="precio"><i class="fas fa-euro-sign" style="color: var(--accent);"></i> Precio de compra</label>
+            <input type="number" id="precio" min="0" step="1000" placeholder="Ej. 250000" />
+          </div>
+          <div class="field">
+            <label for="extras"><i class="fas fa-tools" style="color: var(--accent);"></i> Costes adicionales</label>
+            <input type="number" id="extras" min="0" step="500" placeholder="Reformas, mobiliario, notaría…" />
+          </div>
+          <div class="field">
+            <label for="ibi"><i class="fas fa-file-invoice-dollar" style="color: var(--accent);"></i> IBI anual</label>
+            <input type="number" id="ibi" min="0" step="100" placeholder="Ej. 800" />
+          </div>
+          <div class="field">
+            <label for="comunidad"><i class="fas fa-building" style="color: var(--accent);"></i> Comunidad mensual</label>
+            <input type="number" id="comunidad" min="0" step="10" placeholder="Ej. 100" />
+          </div>
+          <div class="field">
+            <label for="seguro"><i class="fas fa-shield-alt" style="color: var(--accent);"></i> Seguro anual</label>
+            <input type="number" id="seguro" min="0" step="50" placeholder="Ej. 300" />
+          </div>
+          <div class="field">
+            <label for="mantenimiento"><i class="fas fa-wrench" style="color: var(--accent);"></i> Mantenimiento anual</label>
+            <input type="number" id="mantenimiento" min="0" step="100" placeholder="Ej. 1200" />
+          </div>
+          <div class="field">
+            <label for="alquiler"><i class="fas fa-money-bill-wave" style="color: var(--accent);"></i> Ingreso mensual por alquiler</label>
+            <input type="number" id="alquiler" min="0" step="50" placeholder="Ej. 1500" />
+          </div>
+          <div class="field">
+            <label for="meses"><i class="fas fa-calendar-alt" style="color: var(--accent);"></i> Meses alquilado al año</label>
+            <input type="number" id="meses" min="0" max="12" step="0.5" placeholder="Ej. 12" />
+          </div>
+          <div class="field">
+            <label for="vacancia"><i class="fas fa-hourglass-half" style="color: var(--accent);"></i> Vacancia esperada</label>
+            <input type="range" id="vacancia" min="0" max="30" step="1" value="0" />
+            <small>Porcentaje del tiempo sin alquiler. Valor actual: <span class="range-value" id="vacanciaValor">0%</span></small>
+          </div>
+          <div class="field">
+            <label for="tipoIrpf"><i class="fas fa-percentage" style="color: var(--accent);"></i> Tipo de IRPF</label>
+            <select id="tipoIrpf">
+              <option value="0.19">19%</option>
+              <option value="0.21">21%</option>
+              <option value="0.23">23%</option>
+              <option value="0.26">26%</option>
+              <option value="0.076">7.6% con reducción</option>
+            </select>
+            <small>Aplicamos el porcentaje sobre el beneficio antes de impuestos.</small>
+          </div>
+          <div class="button-row">
+            <button type="button" class="btn-primary" id="calcularBtn">Calcular ROI</button>
+            <button type="button" class="btn-secondary" id="resetBtn">Restablecer</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card results-card">
+        <div>
+          <div class="roi-badge" id="roiResultado">0%</div>
+          <p class="roi-status" id="evaluacionROI">Introduce tus datos para ver la rentabilidad neta.</p>
+          <p class="roi-color-hint" id="roiColorHint">El indicador se ilumina en verde cuando la rentabilidad es positiva y en rojo cuando refleja pérdidas.</p>
+          <div class="roi-legend" aria-label="Leyenda de colores del indicador de ROI">
+            <span><span class="legend-dot legend-excelente" aria-hidden="true"></span> ROI ≥ 8%: rentabilidad destacada</span>
+            <span><span class="legend-dot legend-saludable" aria-hidden="true"></span> ROI 5-8%: desempeño saludable</span>
+            <span><span class="legend-dot legend-justo" aria-hidden="true"></span> ROI 0-5%: rentabilidad positiva ajustada</span>
+            <span><span class="legend-dot legend-equilibrio" aria-hidden="true"></span> ROI = 0%: punto de equilibrio</span>
+            <span><span class="legend-dot legend-negativo" aria-hidden="true"></span> ROI &lt; 0%: pérdidas netas</span>
           </div>
         </div>
-        <p><strong>Gastos Anuales:</strong> <span id="gastAnual">-</span></p>
-        <div class="bar-container">
-          <div class="bar">
-            <div class="bar-fill" id="barGastos" style="width: 0%; background: var(--rojo-suave);"></div>
+
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="summary-label">Inversión total</span>
+            <span class="summary-value" id="invTotal">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Gastos anuales</span>
+            <span class="summary-value" id="gastAnual">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Ingresos brutos ajustados</span>
+            <span class="summary-value" id="ingAnual">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Beneficio antes de impuestos</span>
+            <span class="summary-value" id="netoAnual">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">IRPF estimado</span>
+            <span class="summary-value" id="impuestoEstimado">-</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Flujo mensual neto</span>
+            <span class="summary-value" id="cashflowMensual">-</span>
           </div>
         </div>
-        <p><strong>Ingresos Anuales:</strong> <span id="ingAnual">-</span></p>
-        <div class="bar-container">
-          <div class="bar">
-            <div class="bar-fill" id="barIngresos" style="width: 0%; background: var(--aqua-calima);"></div>
+
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="metric-header">
+              <span>ROI bruto</span>
+              <span id="roiBruto">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="barRoiBruto"></div>
+            </div>
+          </div>
+          <div class="metric">
+            <div class="metric-header">
+              <span>ROI neto</span>
+              <span id="roiNeto">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="barRoiNeto"></div>
+            </div>
           </div>
         </div>
-        <p><strong>Ingresos Netos:</strong> <span id="netoAnual">-</span></p>
-        <div class="bar-container">
-          <div class="bar">
-            <div class="bar-fill" id="barBeneficio" style="width: 0%; background: var(--verde-menta);"></div>
+
+        <div class="detail-grid">
+          <div class="detail-box">
+            <span>Recuperación estimada</span>
+            <strong id="payback">-</strong>
+          </div>
+          <div class="detail-box">
+            <span>Ocupación efectiva</span>
+            <strong id="ocupacionReal">-</strong>
           </div>
         </div>
-        <p><strong>IRPF estimado:</strong> <span id="impuestoEstimado">-</span></p>
-        <div class="bar-container">
-          <div class="bar">
-            <div class="bar-fill" id="barIRPF" style="width: 0%; background: orange;"></div>
-          </div>
+
+        <div>
+          <h3 style="margin: 0 0 12px; font-size: 1.05rem; font-weight: 600; color: var(--text);">Recomendaciones</h3>
+          <ul class="insights" id="insightsList">
+            <li><i class="fas fa-lightbulb"></i><span>Completa el formulario para obtener insights automáticos de tu inversión.</span></li>
+          </ul>
         </div>
-        <div id="roiResultado" class="roi-destacado">-</div>
-        <div id="evaluacionROI" class="roi-evaluacion"></div>
-      </div>
-    </div>
+        <div class="timestamp" id="timestamp"></div>
+      </section>
+    </main>
+
+    <footer class="note">
+      Calculadora creada para fines educativos. Verifica siempre con un asesor financiero profesional antes de tomar decisiones de inversión.
+    </footer>
   </div>
+
   <script>
+    const STORAGE_KEY = 'calima-homes-roi';
+
+    const campos = [
+      'moneda',
+      'precio',
+      'extras',
+      'ibi',
+      'comunidad',
+      'seguro',
+      'mantenimiento',
+      'alquiler',
+      'meses',
+      'vacancia',
+      'tipoIrpf'
+    ];
+
+    const form = document.getElementById('roiForm');
+    const calcularBtn = document.getElementById('calcularBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const vacanciaInput = document.getElementById('vacancia');
+    const vacanciaValor = document.getElementById('vacanciaValor');
+
+    const resultadoRefs = {
+      roiBadge: document.getElementById('roiResultado'),
+      roiStatus: document.getElementById('evaluacionROI'),
+      roiColorHint: document.getElementById('roiColorHint'),
+      inversionTotal: document.getElementById('invTotal'),
+      gastosAnuales: document.getElementById('gastAnual'),
+      ingresosAnuales: document.getElementById('ingAnual'),
+      beneficioAntes: document.getElementById('netoAnual'),
+      irpf: document.getElementById('impuestoEstimado'),
+      cashflowMensual: document.getElementById('cashflowMensual'),
+      roiBruto: document.getElementById('roiBruto'),
+      roiNeto: document.getElementById('roiNeto'),
+      barRoiBruto: document.getElementById('barRoiBruto'),
+      barRoiNeto: document.getElementById('barRoiNeto'),
+      payback: document.getElementById('payback'),
+      ocupacionReal: document.getElementById('ocupacionReal'),
+      insightsList: document.getElementById('insightsList'),
+      timestamp: document.getElementById('timestamp')
+    };
+
+    const valoresPorDefecto = {
+      moneda: 'EUR',
+      precio: 250000,
+      extras: 20000,
+      ibi: 800,
+      comunidad: 100,
+      seguro: 300,
+      mantenimiento: 1200,
+      alquiler: 1500,
+      meses: 12,
+      vacancia: 0,
+      tipoIrpf: 0.19
+    };
+
+    function obtenerValor(id) {
+      const elemento = document.getElementById(id);
+      if (!elemento) return 0;
+      const valor = elemento.value;
+      const numerico = parseFloat(valor);
+      return Number.isFinite(numerico) ? numerico : 0;
+    }
+
+    function clamp(valor, min, max) {
+      return Math.min(Math.max(valor, min), max);
+    }
+
+    function formatearMoneda(valor, currency) {
+      if (!Number.isFinite(valor)) return '-';
+      try {
+        return new Intl.NumberFormat('es-ES', {
+          style: 'currency',
+          currency,
+          maximumFractionDigits: 2
+        }).format(valor);
+      } catch (error) {
+        const simbolo = document.querySelector(`#moneda option[value="${currency}"]`)?.dataset?.simbolo || '€';
+        return `${simbolo}${valor.toFixed(2)}`;
+      }
+    }
+
+    function formatearPorcentaje(valor) {
+      if (!Number.isFinite(valor)) return '0%';
+      return `${valor.toFixed(2)}%`;
+    }
+
+    function formatearMeses(valor) {
+      if (!Number.isFinite(valor)) return '-';
+      if (valor === Infinity) return 'No recupera';
+      if (valor < 1) {
+        return `${Math.round(valor * 12)} meses`;
+      }
+      return `${valor.toFixed(1)} años`;
+    }
+
+    function generarInsights({ roiNeto, cashflowMensual, beneficioAntes, payback, vacancia, roiBruto }) {
+      const insights = [];
+
+      if (roiNeto > 8) {
+        insights.push({ icon: 'fa-star', texto: 'La rentabilidad neta supera el 8%. Excelente equilibrio entre ingresos y gastos.' });
+      } else if (roiNeto > 5) {
+        insights.push({ icon: 'fa-thumbs-up', texto: 'El ROI neto es saludable. Revisa si puedes optimizar gastos para acercarte al 8%.' });
+      } else if (roiNeto > 0) {
+        insights.push({ icon: 'fa-seedling', texto: 'Rentabilidad positiva pero moderada. Negocia los costes fijos o valora subir el alquiler.' });
+      } else {
+        insights.push({ icon: 'fa-triangle-exclamation', texto: 'Rentabilidad negativa. Revisa gastos y ocupación: la inversión podría estar generando pérdidas.' });
+      }
+
+      if (cashflowMensual > 0) {
+        insights.push({ icon: 'fa-piggy-bank', texto: `Generas un flujo mensual neto de ${formatearMoneda(cashflowMensual, document.getElementById('moneda').value)}. Considera destinarlo a un fondo de imprevistos.` });
+      } else if (cashflowMensual < 0) {
+        insights.push({ icon: 'fa-wallet', texto: `El flujo mensual es negativo (${formatearMoneda(cashflowMensual, document.getElementById('moneda').value)}). Ajusta la renta o reduce la vacancia.` });
+      }
+
+      if (beneficioAntes <= 0) {
+        insights.push({ icon: 'fa-calculator', texto: 'Los gastos anuales superan los ingresos. Evalúa la posibilidad de renegociar contratos o buscar deducciones fiscales.' });
+      }
+
+      if (payback === Infinity) {
+        insights.push({ icon: 'fa-hourglass-end', texto: 'Con los datos actuales no se recupera la inversión inicial. Necesitas incrementar ingresos o reducir costes.' });
+      } else if (payback > 15) {
+        insights.push({ icon: 'fa-clock', texto: `El periodo de recuperación es largo (${formatearMeses(payback)}). Busca formas de acelerar la amortización.` });
+      }
+
+      if (vacancia > 10) {
+        insights.push({ icon: 'fa-door-open', texto: 'La vacancia es elevada. Trabaja en estrategias de marketing o fideliza a los inquilinos para reducirla.' });
+      }
+
+      if (roiBruto - roiNeto > 2) {
+        insights.push({ icon: 'fa-scale-balanced', texto: 'El impacto del IRPF es significativo. Consulta deducciones posibles o revisa el régimen fiscal aplicable.' });
+      }
+
+      return insights;
+    }
+
+    function actualizarTimestamp() {
+      const ahora = new Date();
+      const formateado = ahora.toLocaleString('es-ES', {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      });
+      resultadoRefs.timestamp.textContent = `Última simulación: ${formateado}`;
+    }
+
     function calcularROI() {
-      const precio = parseFloat(document.getElementById("precio").value);
-      const extras = parseFloat(document.getElementById("extras").value);
-      const ibi = parseFloat(document.getElementById("ibi").value);
-      const comunidad = parseFloat(document.getElementById("comunidad").value);
-      const seguro = parseFloat(document.getElementById("seguro").value);
-      const mantenimiento = parseFloat(document.getElementById("mantenimiento").value);
-      const alquiler = parseFloat(document.getElementById("alquiler").value);
-      const meses = parseFloat(document.getElementById("meses").value);
-      const tipoIrpf = parseFloat(document.getElementById("tipoIrpf").value);
+      const currency = document.getElementById('moneda').value;
+      const precio = obtenerValor('precio');
+      const extras = obtenerValor('extras');
+      const ibi = obtenerValor('ibi');
+      const comunidad = obtenerValor('comunidad');
+      const seguro = obtenerValor('seguro');
+      const mantenimiento = obtenerValor('mantenimiento');
+      const alquiler = obtenerValor('alquiler');
+      const meses = clamp(obtenerValor('meses'), 0, 12);
+      const vacancia = clamp(obtenerValor('vacancia'), 0, 30);
+      const tipoIrpf = clamp(obtenerValor('tipoIrpf'), 0, 1);
 
       const inversion = precio + extras;
       const gastosAnuales = ibi + comunidad * 12 + seguro + mantenimiento;
-      const ingresosAnuales = alquiler * meses;
-      const beneficioNeto = ingresosAnuales - gastosAnuales;
-      const irpf = beneficioNeto * tipoIrpf;
-      const roi = ((beneficioNeto / inversion) * 100).toFixed(2);
+      const ingresosPotenciales = alquiler * meses;
+      const ingresosAjustados = ingresosPotenciales * (1 - vacancia / 100);
+      const beneficioAntesImpuestos = ingresosAjustados - gastosAnuales;
+      const irpf = Math.max(0, beneficioAntesImpuestos * tipoIrpf);
+      const beneficioNeto = beneficioAntesImpuestos - irpf;
 
-      document.getElementById("barGastos").style.width = ((gastosAnuales / inversion) * 100).toFixed(1) + "%";
-      document.getElementById("barIngresos").style.width = ((ingresosAnuales / inversion) * 100).toFixed(1) + "%";
-      document.getElementById("barBeneficio").style.width = ((beneficioNeto / inversion) * 100).toFixed(1) + "%";
+      const roiBruto = inversion > 0 ? (beneficioAntesImpuestos / inversion) * 100 : 0;
+      const roiNeto = inversion > 0 ? (beneficioNeto / inversion) * 100 : 0;
+      const cashflowMensual = beneficioNeto / 12;
+      const payback = beneficioNeto > 0 ? inversion / beneficioNeto : Infinity;
+      const ocupacionReal = meses * (1 - vacancia / 100);
 
-      document.getElementById("invTotal").textContent = inversion.toLocaleString() + "€";
-      document.getElementById("gastAnual").textContent = gastosAnuales.toLocaleString() + "€";
-      document.getElementById("ingAnual").textContent = ingresosAnuales.toLocaleString() + "€";
-      document.getElementById("netoAnual").textContent = beneficioNeto.toLocaleString() + "€";
-      document.getElementById("impuestoEstimado").textContent = irpf.toFixed(2) + "€";
-      document.getElementById("roiResultado").textContent = roi + "%";
-      document.getElementById("barIRPF").style.width = ((irpf / inversion) * 100).toFixed(1) + "%";
+      resultadoRefs.inversionTotal.textContent = inversion > 0 ? formatearMoneda(inversion, currency) : '-';
+      resultadoRefs.gastosAnuales.textContent = formatearMoneda(gastosAnuales, currency);
+      resultadoRefs.ingresosAnuales.textContent = formatearMoneda(ingresosAjustados, currency);
+      resultadoRefs.beneficioAntes.textContent = formatearMoneda(beneficioAntesImpuestos, currency);
+      resultadoRefs.irpf.textContent = formatearMoneda(irpf, currency);
+      resultadoRefs.cashflowMensual.textContent = formatearMoneda(cashflowMensual, currency);
 
-      const roiBox = document.getElementById("roiResultado");
-      roiBox.classList.remove("roi-verde", "roi-amarillo", "roi-rojo");
-      if (roi >= 6) {
-        roiBox.classList.add("roi-verde");
-        document.getElementById("evaluacionROI").textContent = "✅ Parece una buena inversión";
-      } else if (roi >= 4) {
-        roiBox.classList.add("roi-amarillo");
-        document.getElementById("evaluacionROI").textContent = "⚠️ Rentabilidad aceptable";
+      resultadoRefs.roiBruto.textContent = formatearPorcentaje(roiBruto);
+      resultadoRefs.roiNeto.textContent = formatearPorcentaje(roiNeto);
+
+      resultadoRefs.barRoiBruto.style.transform = `scaleX(${Math.max(0, Math.min(roiBruto / 12, 1))})`;
+      resultadoRefs.barRoiNeto.style.transform = `scaleX(${Math.max(0, Math.min(roiNeto / 12, 1))})`;
+
+      resultadoRefs.payback.textContent = formatearMeses(payback);
+      resultadoRefs.ocupacionReal.textContent = `${ocupacionReal.toFixed(1)} meses (${(ocupacionReal / 12 * 100).toFixed(1)}%)`;
+
+      const roiBadge = resultadoRefs.roiBadge;
+      const roiStatus = resultadoRefs.roiStatus;
+      const roiColorHint = resultadoRefs.roiColorHint;
+
+      roiBadge.textContent = formatearPorcentaje(roiNeto);
+      roiBadge.style.background = 'rgba(10, 107, 241, 0.12)';
+      roiBadge.style.color = 'var(--primary)';
+      roiColorHint.textContent = 'El indicador se ilumina en verde cuando la rentabilidad es positiva y en rojo cuando refleja pérdidas.';
+
+      if (roiNeto >= 8) {
+        roiBadge.style.background = 'rgba(46, 184, 114, 0.15)';
+        roiBadge.style.color = 'var(--success)';
+        roiStatus.textContent = 'Excelente rentabilidad neta. La inversión está muy bien optimizada.';
+        roiColorHint.textContent = 'Verde intenso: el ROI neto supera el 8%, lo que indica una rentabilidad destacada.';
+      } else if (roiNeto >= 5) {
+        roiBadge.style.background = 'rgba(11, 207, 186, 0.18)';
+        roiBadge.style.color = 'var(--primary-dark)';
+        roiStatus.textContent = 'ROI saludable. Comprueba si puedes mejorar la ocupación o negociar gastos.';
+        roiColorHint.textContent = 'Turquesa: el ROI neto se mantiene entre 5% y 8%, mostrando un desempeño saludable.';
+      } else if (roiNeto > 0) {
+        roiBadge.style.background = 'rgba(251, 188, 4, 0.18)';
+        roiBadge.style.color = 'var(--warning)';
+        roiStatus.textContent = 'Rentabilidad positiva pero ajustada. Valora optimizar tus costes o revisar la renta.';
+        roiColorHint.textContent = 'Amarillo: el ROI neto es positivo pero ajustado (0% a 5%). Considera optimizar gastos o ingresos.';
+      } else if (roiNeto === 0) {
+        roiBadge.style.background = 'rgba(148, 163, 184, 0.2)';
+        roiBadge.style.color = 'var(--muted)';
+        roiStatus.textContent = 'Ni ganancias ni pérdidas. Ajusta tus parámetros para ver posibles escenarios.';
+        roiColorHint.textContent = 'Gris: estás en el punto de equilibrio, sin ganancias ni pérdidas netas.';
       } else {
-        roiBox.classList.add("roi-rojo");
-        document.getElementById("evaluacionROI").textContent = "❌ Rentabilidad baja";
+        roiBadge.style.background = 'rgba(239, 68, 68, 0.15)';
+        roiBadge.style.color = 'var(--danger)';
+        roiStatus.textContent = 'ROI negativo. La inversión estaría generando pérdidas netas.';
+        roiColorHint.textContent = 'Rojo: el ROI neto es negativo y refleja pérdidas. Revisa ingresos, gastos y vacancia.';
+      }
+
+      const insights = generarInsights({
+        roiNeto,
+        cashflowMensual,
+        beneficioAntes: beneficioAntesImpuestos,
+        payback,
+        vacancia,
+        roiBruto
+      });
+
+      resultadoRefs.insightsList.innerHTML = '';
+      insights.forEach((insight) => {
+        const li = document.createElement('li');
+        const icon = document.createElement('i');
+        icon.classList.add('fas', insight.icon);
+        li.appendChild(icon);
+        const texto = document.createElement('span');
+        texto.textContent = insight.texto;
+        li.appendChild(texto);
+        resultadoRefs.insightsList.appendChild(li);
+      });
+
+      actualizarTimestamp();
+      guardarEnStorage();
+    }
+
+    function guardarEnStorage() {
+      const datos = {};
+      campos.forEach((campo) => {
+        const elemento = document.getElementById(campo);
+        if (elemento) {
+          datos[campo] = elemento.value;
+        }
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(datos));
+    }
+
+    function cargarDesdeStorage() {
+      try {
+        const datosGuardados = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!datosGuardados) return false;
+        campos.forEach((campo) => {
+          if (campo in datosGuardados) {
+            const elemento = document.getElementById(campo);
+            if (elemento) {
+              elemento.value = datosGuardados[campo];
+            }
+          }
+        });
+        vacanciaValor.textContent = `${obtenerValor('vacancia')}%`;
+        return true;
+      } catch (error) {
+        console.warn('No se pudo cargar la configuración guardada', error);
+        return false;
       }
     }
+
+    function establecerValoresPorDefecto() {
+      Object.entries(valoresPorDefecto).forEach(([campo, valor]) => {
+        const elemento = document.getElementById(campo);
+        if (!elemento) return;
+        elemento.value = valor;
+      });
+      vacanciaValor.textContent = `${valoresPorDefecto.vacancia}%`;
+    }
+
+    function restablecerFormulario() {
+      form.reset();
+      document.getElementById('moneda').value = 'EUR';
+      vacanciaInput.value = 0;
+      vacanciaValor.textContent = '0%';
+      localStorage.removeItem(STORAGE_KEY);
+      resultadoRefs.roiBadge.textContent = '0%';
+      resultadoRefs.roiBadge.style.background = 'rgba(10, 107, 241, 0.12)';
+      resultadoRefs.roiBadge.style.color = 'var(--primary)';
+      resultadoRefs.roiStatus.textContent = 'Introduce tus datos para ver la rentabilidad neta.';
+      resultadoRefs.roiColorHint.textContent = 'El indicador se ilumina en verde cuando la rentabilidad es positiva y en rojo cuando refleja pérdidas.';
+      resultadoRefs.inversionTotal.textContent = '-';
+      resultadoRefs.gastosAnuales.textContent = '-';
+      resultadoRefs.ingresosAnuales.textContent = '-';
+      resultadoRefs.beneficioAntes.textContent = '-';
+      resultadoRefs.irpf.textContent = '-';
+      resultadoRefs.cashflowMensual.textContent = '-';
+      resultadoRefs.roiBruto.textContent = '0%';
+      resultadoRefs.roiNeto.textContent = '0%';
+      resultadoRefs.barRoiBruto.style.transform = 'scaleX(0)';
+      resultadoRefs.barRoiNeto.style.transform = 'scaleX(0)';
+      resultadoRefs.payback.textContent = '-';
+      resultadoRefs.ocupacionReal.textContent = '-';
+      resultadoRefs.insightsList.innerHTML = '<li><i class="fas fa-lightbulb"></i><span>Completa el formulario para obtener insights automáticos de tu inversión.</span></li>';
+      resultadoRefs.timestamp.textContent = '';
+    }
+
+    vacanciaInput.addEventListener('input', () => {
+      vacanciaValor.textContent = `${vacanciaInput.value}%`;
+    });
+
+    calcularBtn.addEventListener('click', calcularROI);
+    resetBtn.addEventListener('click', restablecerFormulario);
+
+    campos.forEach((campo) => {
+      const elemento = document.getElementById(campo);
+      if (!elemento) return;
+      const evento = elemento.type === 'range' ? 'input' : 'change';
+      elemento.addEventListener(evento, () => {
+        guardarEnStorage();
+        if (resultadoRefs.timestamp.textContent) {
+          calcularROI();
+        }
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const hayDatosGuardados = cargarDesdeStorage();
+      if (!hayDatosGuardados) {
+        establecerValoresPorDefecto();
+      }
+      if (obtenerValor('precio') > 0) {
+        calcularROI();
+      }
+    });
   </script>
 </body>
 </html>
